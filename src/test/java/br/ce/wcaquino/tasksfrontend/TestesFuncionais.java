@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
@@ -17,7 +18,9 @@ public class TestesFuncionais {
         WebDriverManager.chromedriver().setup();
         //DesiredCapabilities cap = DesiredCapabilities.chrome();
         //WebDriver driver = new RemoteWebDriver(new URL("http://192.168.1.107:4444/wd/hub"), cap);
-        WebDriver driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");
+        WebDriver driver = new ChromeDriver(options);
         driver.navigate().to("http://localhost:8001/tasks/");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         return driver;
