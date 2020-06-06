@@ -1,14 +1,15 @@
 package br.ce.wcaquino.tasksfrontend;
 
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
@@ -16,12 +17,13 @@ public class TestesFuncionais {
 
     public WebDriver acessarAplicacao() throws MalformedURLException {
         WebDriverManager.chromedriver().setup();
-        //DesiredCapabilities cap = DesiredCapabilities.chrome();
-        //WebDriver driver = new RemoteWebDriver(new URL("http://192.168.1.107:4444/wd/hub"), cap);
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");
-        WebDriver driver = new ChromeDriver(options);
-        driver.navigate().to("http://localhost:8001/tasks/");
+        DesiredCapabilities cap = DesiredCapabilities.chrome();
+        WebDriver driver = new RemoteWebDriver(new URL("http://192.168.0.91:4444/wd/hub"), cap);
+        driver.navigate().to("http://192.168.0.91:8001/tasks");
+        //ChromeOptions options = new ChromeOptions();
+        //options.addArguments("--headless");
+        //WebDriver driver = new ChromeDriver(options);
+        //driver.navigate().to("http://localhost:8001/tasks/");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         return driver;
     }
