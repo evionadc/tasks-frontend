@@ -18,8 +18,8 @@ public class TestesFuncionais {
     public WebDriver acessarAplicacao() throws MalformedURLException {
         WebDriverManager.chromedriver().setup();
         DesiredCapabilities cap = DesiredCapabilities.chrome();
-        WebDriver driver = new RemoteWebDriver(new URL("http://192.168.0.91:4444/wd/hub"), cap);
-        driver.navigate().to("http://192.168.0.91:8001/tasks");
+        WebDriver driver = new RemoteWebDriver(new URL("http://192.168.0.166:4444/wd/hub"), cap);
+        driver.navigate().to("http://192.168.0.166:8001/tasks");
         //ChromeOptions options = new ChromeOptions();
         //options.addArguments("--headless");
         //WebDriver driver = new ChromeDriver(options);
