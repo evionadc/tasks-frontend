@@ -1,13 +1,10 @@
 package br.ce.wcaquino.tasksfrontend.stepdefinitions;
 
-import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
@@ -23,14 +20,13 @@ import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.Entao;
 import io.cucumber.java.pt.Quando;
 
-
 public class tasks_stepdefinitions {
 
     public static WebDriver driver;
 
     @Before
     public void setup() throws MalformedURLException {
-        //WebDriverManager.chromedriver().setup();
+        // WebDriverManager.chromedriver().setup();
         DesiredCapabilities cap = DesiredCapabilities.chrome();
         driver = new RemoteWebDriver(new URL("http://192.168.0.166:4444/wd/hub"), cap);
         driver.navigate().to("http://192.168.0.166:8001/tasks");
@@ -68,7 +64,7 @@ public class tasks_stepdefinitions {
     public void validoQueFoiSalvoComSucesso() {
         // Write code here that turns the phrase above into concrete actions
         String message = driver.findElement(By.id("message")).getText();
-            Assert.assertEquals("Success!", message);
+        Assert.assertEquals("Success!", message);
     }
 
     @Entao("clico em remover")
@@ -84,21 +80,20 @@ public class tasks_stepdefinitions {
     }
 
     @After(order = 1)
-	public void screenshot(Scenario cenario) {
-		File file = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-		try {
-			String pathname = "target\\screenshot\\"+cenario.getName()+UUID.randomUUID().toString().substring(0, 5)+".jpg";
-			FileUtils.copyFile(file, new File(pathname));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		
-	}
-	
-	@After(order =0 )
-	public void fecharbrowser() {
-		driver.quit();
-	}
+    public void screenshot(Scenario cenario) {
+        try {
+            // FileUtils.copyFile(file, new File(pathname));
+            cenario.attach(((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES), "image/png",
+                    cenario.getName() + UUID.randomUUID().toString().substring(0, 5));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @After(order = 0)
+    public void fecharbrowser() {
+        driver.quit();
+    }
 
 }
